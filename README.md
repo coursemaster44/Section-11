@@ -328,6 +328,7 @@ Click on Update and exit
 **Step 3. Give auto scaling group name - asg-cd**
 
 See launch-configuration and click on Next
+
 **Step 4. Select default vpc and subnets all three subnets**
 
 Click Next
