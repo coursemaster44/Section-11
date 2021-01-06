@@ -455,3 +455,203 @@ Click on Update
 
 # End of Lab
 
+
+
+# 4-crud-deployment-on-asg-alb-lab
+
+**Step 1. Go to AWS Console>All Services>EC2>Load Balancing>Target Groups>Create Target Group**
+
+**Step 2. Specify group details as following**
+- In Basic Configuration
+  - Select Instances in target type
+  - Target group name - tg-cd
+  - Protocol-HTTP,Port-8080
+  - VPC-Default
+  - Protocol version - HTTP1
+- Health Checks
+  - Health check protocol- HTTP
+  - Health check path- /
+
+Now Click on Next
+
+**Step 3. In Register targets**
+- Select 2 instances from the available instances
+- Ports for the selected instances-8080
+- Click on "Include as pending below"
+
+Now Click on Create target group
+
+**Step 4. "tg-cd" Target Group has been created**
+
+**Step 5. Go to AWS Console>All Services>EC2>Load Balancing>Load Balancers>Create load balancer**
+
+**Step 6. Click on Create in Application Load Balancer**
+
+**Step 7. Configure Load Balancer as following In Basic Configuration**
+- Name- alb-cd
+- Scheme- internet-facing
+- Ip address type- ipv4
+- Listeners-Protocol-HTTP,Port-80
+- Availability Zones - VPC-Default - Availability Zones-Select all 3 Zones
+
+Click Next:Configure Security Settings
+
+**Step 8.Configure Security Groups**
+- Select security group
+
+Click on Next:Configure Routing
+
+**Step 9.Configure Routing**
+- Target group- Select Existing target group Name - tg-cd
+
+Click on Register Targets
+
+**Step 10.Click on Next:Review>Click on Create>Click on Close**
+
+**Step 11.Developers Tools>CodeDeploy>Applications>crud-app-cd>crud-app-cd-dg>Edit**
+- Provide the following details:
+  - Load Balancer - Enable Load Balancing with Application load Balancer
+  - Choose target group - tg-cd
+
+Click on Save changes
+
+**Step 12.EC2>Load Balancing>Load Balancers>Target groups>tg-cd**
+- See that registered instances are Healthy
+
+**Step 13.Goto Visual Studio Code**
+- Edit index.ejs file for the new color
+- Run the following commands
+```sh
+$ git status
+$ git add .
+$ git commit -m "changed index color"
+$ git push
+```
+**Step 14.Goto Developers Tools>CodeBuild>Build Projects>crud-cb**
+- Click on Start Build
+- change timeout - 0 hrs 5 mins
+- See the Source version is "changed index color"
+
+Click on Start Build
+
+**Step 15 .See Phase details**
+- Build has been completed successfully
+
+
+**Step 16.Goto S3>Buckets>sample-node-app>devbuild-crud/>crud-cb**
+- Hit Refresh to see the changes
+- To make crud-cb public - Object actions>Make Public>exit
+- Copy S3 URI 
+
+**Step 17.Developers Tools>CodeDeploy>Applications>crud-app-cd>crud-app-cd-dg**
+- Click on Create Deployment
+
+**Step 18.In Create Deployment settings** 
+- Revision type - My application is stored in S3 
+- Revision location - Paste S3 URI
+- Revision file type - .Zip
+
+Click on Create Deployment
+
+**Step 19.Click on View Events of one instance**
+- Wait for the success of following events
+```sh
+BeforeBlockTraffic
+BlockTraffic
+AfterBlockTraffic
+ApplicationStop
+DownloadBundle
+BeforeInstall
+Install
+AfterInstall
+ApplicationStart
+Validateservice
+BeforeAllowTraffic
+AllowTraffic
+AfterAllowTraffic
+```
+
+**Step 20.Copy DNS name value of ALB and paste it in browser**
+- Hit refresh to see change in color for second instance
+
+
+**Step 21.Open Postman Tool>Environment>Manage Environments**
+- Select ALB environment and change the url current Value DNS name of ALB:
+  - http://alb-crud-xxxxx.ap-south-1-1.elb.amazonaws.com
+
+Click on Update and exit
+
+**Step 22.Now select ec2-another as Environment**
+
+**Step 23.select {{url}}/create table and Click on Send**
+- Table created successfully
+
+**Step 24.Check the Table created in DynamoDB**
+- Goto AWS Console>DynamoDB>Tables
+  - Table is created
+
+**Step 25.Goto Postman Tool and Now select ALB as Environment**
+- Put the following value - http://{{url}}/insertData
+- Click on Send
+
+**Step 26.Now Goto AWS Console>DynamoDB>Tables>Items>info**
+- New Item added successfully
+
+**Step 27.Goto Postman Tool and Now select ec2 as Environment**
+- Put the following value - http://{{url}}/readData
+- Click on Send
+
+
+**Step 28.Goto Postman Tool and Now select ALB as Environment**
+- http://{{url}}/updateData
+- Click on Send
+
+**Step 29.Now Goto AWS Console>DynamoDB>Tables>Items>info>actors**
+- Check for the data updated
+
+**Step 30.Goto Postman Tool and Now select ec2-aother as Environment**
+- http://{{url}}/deleteData
+- Click on Send
+
+**Step 31.Now Goto AWS Console>DynamoDB>Tables>Items>info>actors**
+- Check for the data deleted
+
+**Step 32.Goto Postman Tool and Now select ALB as Environment**
+- http://{{url}}/deleteTable
+- Click on Send
+
+**Step 33.Now Goto AWS Console>DynamoDB>Tables**
+- Refresh and see that Table is deleted
+
+**Step 34.Goto Ec2Dashboard>Select Instance>Security>Securtiy groups>sg-xxxx**
+- Edit inbound rules
+  - Protocol:Port | TCP:8080 from Source:"SG of ALB"
+- Click on Save rules
+
+**Step 35.Goto Postman Tool and Now select ALB as Environment**
+- Put the following value - http://{{url}}/createTable
+- Click on Send
+
+**Step 36.Check the Table created in DynamoDB**
+- Goto AWS Console>DynamoDB>Tables
+  - Table is created
+
+**Step 37.Goto Postman Tool and Now select ec2 as Environment**
+- Put the following value - http://{{url}}/insertData
+- Click on Send
+- Error:It is not working 
+
+**Step 39.Goto Postman Tool and Now select ALB as Environment**
+- Put the following value - http://{{url}}/insertData
+- Click on Send
+- Item added successfully
+
+**Step 40.Goto Postman Tool and Now select ALB as Environment**
+- Put the following value - http://{{url}}/readData
+- Click on Send
+- It is working
+
+# End of Lab
+
+
+
