@@ -146,3 +146,97 @@ $ git push
 ```
 # End of lab
 # 2-cd-single-ec2-lab-2
+
+**Step 1.Open the Visual Studio Code**
+- Run the following commands
+```sh
+$ git status
+# modified: deploy_scripts/run.sh
+$ git add .
+$ git commit -m "modified run.sh script"
+$ git push
+```
+**Step 2.Goto Ec2>Security Groups>sg-xxxx>Edit inbound rules**
+- Protocol:Port = Tcp:8080 from Source(0.0.0.0/0) 
+- Click on Save
+
+**Step 3.Goto Developers Tools>CodeBuild>Build Projects>crud-cb**
+- Click on Start Build
+- See the Source version is "modified run.sh script"
+- Click on Start Build
+
+**Step 4.See Phase details**
+- Wait for all phases to complete successfully
+
+**Step 5.Goto S3>Buckets>sample-node-app>devbuild-crud/>crud-cb**
+- Hit Refresh to see the changes
+- To make crud-cb public - Object actions>Make Public>exit
+- Copy S3 URI 
+
+**Step 6.Developers Tools>CodeDeploy>Applications>crud-app-cd-**
+- Click on Deployment group "crud-app-cd-dg"
+
+**Step 7.Click on Create Deployment**
+- See deployment settings 
+- Revision type - My application is stored in S3 
+- Revision location - Paste S3 URI
+- Revision file type - .Zip
+
+Click on Create Deployment
+
+**Step 8.Click on View Events**
+```sh
+ApplicationStop------Success
+DownloadBundle------Success
+BeforeInstall------Success
+Install-----------Success
+AfterInstall------Success
+ApplicationStart------Success
+Validateservice  -------Success
+```
+**Step 9.Click Instance and copy & paste the Public IP address in browser to see it running**
+- e.g.- 13.222.125.52:8080
+
+**Step 10.Open Postman Tool>Environment>Manage Environments**
+- Select ec2 environment and change the url Value as follows:
+  - 13.222.125.52:8080
+
+Click on Update and exit
+
+**Step 11.Now select ec2 as Environment**
+
+**Step 12.Now Open Postman Tool and select {{url}}/create table and Click on Send**
+- Table created successfully
+
+**Step 13.Check the Table created in DynamoDB**
+- Goto AWS Console>DynamoDB>Tables
+  - Table is created
+
+**Step 14.Goto Postman Tool and put the following value**
+- http://{{url}}/readData
+
+**Step 15.Goto Postman Tool and put the following value**
+- http://{{url}}/insertData
+
+**Step 16.Now Goto AWS Console>DynamoDB>Tables>Items>info**
+- New Item added successfully
+
+**Step 17.Goto Postman Tool and put the following value**
+- http://{{url}}/updateData
+
+**Step 18.Now Goto AWS Console>DynamoDB>Tables>Items>info>actors**
+- Check for the data updated
+
+**Step 19.Goto Postman Tool and put the following value**
+- http://{{url}}/deleteData
+
+**Step 20.Now Goto AWS Console>DynamoDB>Tables>Items>info>actors**
+- Check for the data deleted
+
+**Step 21.Goto Postman Tool and put the following value**
+- http://{{url}}/deleteTable
+
+**Step 22.Now Goto AWS Console>DynamoDB>Tables**
+- Refresh and see that Table is deleted
+
+# End of Lab
