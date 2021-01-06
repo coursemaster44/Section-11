@@ -406,7 +406,7 @@ Click on Update
 - Paste it in Initial value of ec2
 - Click on Update
 
-**Step 23.Now select ec2 as Environment **
+**Step 23.Now select ec2 as Environment**
 
 **Step 24.Now select {{url}}/create table and Click on Send**
 - Table created successfully
