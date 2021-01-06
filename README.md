@@ -1,5 +1,79 @@
 # Section-11
 # Deploying-Sample-App-With-CRUD-Functionality-on AWS-With-(CI-CD)
+
+# 0-crud-cb-lab
+**Step 1.Open the Visual Studio Code**
+- Run the following commands
+```sh
+$ git status
+$ git add .
+$ cp ../buildspec.yml .
+$ git status
+$ git add .
+$ git commit -m "commiting changes made to env.prod,Procfile,package and buildspec"
+$ git push
+```
+**Step 2.Goto Developer Tools>CodeCommit>Repositories>crud-app**
+- See All the things have been copied 
+
+**Step 3.Goto CodeBuild>Build Projects>Create build project**
+- Project name - crud-cb
+- In Source Tab
+  - Source provider - AWS CodeCommit
+  - Repository - crud-app
+  - Reference Type select “Branch” and Branch as “Master”
+    - Source version - "commiting changes made to env.prod,Procfile,package and buildspec"
+
+- In Environment Tab
+  - Environment image - Managed image
+  - Operating system - Amazon Linux 2
+  - Runtime(s) - Standard
+  - Image - aws/codebuild/amazonlinux2-x86_64-standard:3.0
+  - Image version - Always use the latest image for this version
+  - Service role - Existing service role
+  
+- In Buildspec section:
+  - Build specifications - select “Use a buildspec file”
+
+- Artifacts Section:
+  - Type - Amazon S3
+  - Bucket name - Sample-Node_App-amit
+  - Name - devbuild-crud
+  - Path - devbuilds/
+  - Artifacts packaging - Select Zip
+  - Select “Disable artifacts encryption”
+
+- Logs section
+  - CloudWatch - Select Cloudwatch logs
+  - Group name - “cb-project-s3”
+  - Stream name - "cb-project-s3"
+
+Click on Create Build Project
+
+**Step 4.Click on Start Build**
+- In Build configuration
+  - Timeout - 0 Hours 5 Minutes
+  
+Click on Start Build
+
+**Step 4. See Build Status>Phase details**
+
+**Step 5. Now Goto S3>sample-node-app-amit>devbuild-crud**
+- See crud-cb >zip file
+
+# End of Lab
+
+
+
+
+
+
+
+
+
+
+
+
 # 1-cd-single-ec2-lab-1
 
 **Step 1.Open the Visual Studio Code**
