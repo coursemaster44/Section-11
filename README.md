@@ -749,7 +749,7 @@ Click on Create Deployment
 
 **Step 14.Check DNS name in browser of ALB is now serving traffic to 2 instances**
 
-**Step 15.Open Postman Tool>Environment>Manage Environments
+**Step 15.Open Postman Tool>Environment>Manage Environments**
 
 Select ALB environment and change the url current Value DNS name of ALB:
 http://alb-crud-xxxxx.ap-south-1-1.elb.amazonaws.com
