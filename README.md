@@ -314,3 +314,133 @@ Click on Update and exit
 - Refresh and see that Table is deleted
 
 # End of Lab
+
+
+
+
+
+# 3-crud-deployment-on-asg-lab
+**Step1-AWS Console>All Services>EC2>Auto Scaling>Launch Configuration>lc-cd**
+
+**Step 2. Select launch configuration “lc-cd ”
+- Click Actions>create auto scaling group
+
+**Step 3. Give auto scaling group name - asg-cd**
+
+See launch-configuration and click on Next
+**Step 4. Select default vpc and subnets all three subnets**
+
+Click Next
+
+**Step 5. Select No Load Balancer and Health checks with ELB**
+- health check grace period 120 seconds
+Click Next
+
+**Step 6. Keep Group size as following**
+- Desired - 1
+- Minimum - 1
+- Maximum - 1
+
+**Step 7. Select Scaling policies-None Click on Next**
+
+**Step 8. In Add Notifications Click Next**
+
+**Step 9. In Add tags Click Next**
+
+**Step 10. See Review and Click on Create Auto Scaling Group**
+
+**Step 11. AWS Console>Developers Tools>CodeDeploy>Applications>cd-app>Create Deployment Group**
+
+**Step 12.Provide details:**
+- Deployment group name - crud-app-cd-asg-dg
+- Service role - Same
+- Deployment Type - In-Place
+- Environment configuration - Select Auto Scaling group asg-cd
+- Deployment settings - CodeDeployDefault:AllAtOnce
+- Load Balancer - No Load Balancer
+
+Click Create deployment group
+
+**Step 13. Click on Create Deployment**
+- keep Deployment group as it is
+- Revision type - My application is stored in Amazon S3
+- Revision location - Paste the S3 URI(s3://sample-node-app-amit/devbuild-crud/crud-cb)
+- Revision file type - .zip
+
+Click on Create Deployment
+
+**Step 14.Monitor Deployment LifeCycle Events**
+```sh
+ApplicationStop
+DownloadBundle
+BeforeInstall
+Install
+AfterInstall
+ApplicationStart
+Validateservice
+```
+**Step 18. Copy the Instance Ip address and paste it in browser**
+- e.g. 13.221.112.30:8080
+
+See the application running
+
+**Step 19.Ec2>Auto Scaling groups>asg-cd>Edit Group size**
+- Desired - 2
+- Minimum - 2
+- Maximum - 2
+
+Click on Update
+
+**Step 20.Ec2>Auto Scaling Group>asg-cd>Instances**
+- Click on the new Instance and copy Public IP address 
+
+**Step 21.Open Postman Tool**
+- Click on Manage Environments>Add environment
+  - Name - ec2-another
+  - Variable - url
+  - Initial value - http://13.222.125.52:8080
+- Click on Add and exit
+
+**Step 22.Click on Manage Environments>Ec2**
+- Copy 2nd Instance's Public IP address
+- Paste it in Initial value of ec2
+- Click on Update
+
+**Step 23.Now select ec2 as Environment **
+
+**Step 24.Now select {{url}}/create table and Click on Send**
+- Table created successfully
+
+**Step 25.Check the Table created in DynamoDB**
+- Goto AWS Console>DynamoDB>Tables
+  - Table is created
+
+**Step 26.Goto Postman Tool and select ec2-another as Environment**
+- Put the value**- http://{{url}}/readData
+
+**Step 27.Goto Postman Tool and select ec2 as Environment**
+- Put the value - http://{{url}}/insertData
+
+**Step 28.Now Goto AWS Console>DynamoDB>Tables>Items>info**
+- New Item added successfully
+
+**Step 29.Goto Postman Tool and select ec2-another as Environment**
+- Put the value**- http://{{url}}/updateData
+
+**Step 30.Now Goto AWS Console>DynamoDB>Tables>Items>info>actors**
+- Check for the data updated
+
+**Step 31.Goto Postman Tool and select ec2 as Environment**
+- Put the value**- http://{{url}}/deleteData
+
+**Step 32.Now Goto AWS Console>DynamoDB>Tables>Items>info>actors**
+- Check for the data deleted
+
+**Step 33.Goto Postman Tool and select ec2-another as Environment**
+- Put the value**- http://{{url}}/deleteTable
+
+**Step 34..Now Goto AWS Console>DynamoDB>Tables**
+- Refresh and see that Table is deleted
+
+# End of Lab
+
