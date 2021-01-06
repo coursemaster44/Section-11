@@ -417,7 +417,7 @@ Click on Update
   - Table is created
 
 **Step 26.Goto Postman Tool and select ec2-another as Environment**
-- Put the value**- http://{{url}}/readData
+- Put the value - http://{{url}}/readData
 
 **Step 27.Goto Postman Tool and select ec2 as Environment**
 - Put the value - http://{{url}}/insertData
@@ -426,19 +426,19 @@ Click on Update
 - New Item added successfully
 
 **Step 29.Goto Postman Tool and select ec2-another as Environment**
-- Put the value**- http://{{url}}/updateData
+- Put the value - http://{{url}}/updateData
 
 **Step 30.Now Goto AWS Console>DynamoDB>Tables>Items>info>actors**
 - Check for the data updated
 
 **Step 31.Goto Postman Tool and select ec2 as Environment**
-- Put the value**- http://{{url}}/deleteData
+- Put the value - http://{{url}}/deleteData
 
 **Step 32.Now Goto AWS Console>DynamoDB>Tables>Items>info>actors**
 - Check for the data deleted
 
 **Step 33.Goto Postman Tool and select ec2-another as Environment**
-- Put the value**- http://{{url}}/deleteTable
+- Put the value - http://{{url}}/deleteTable
 
 **Step 34..Now Goto AWS Console>DynamoDB>Tables**
 - Refresh and see that Table is deleted
