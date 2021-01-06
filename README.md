@@ -322,7 +322,7 @@ Click on Update and exit
 # 3-crud-deployment-on-asg-lab
 **Step1-AWS Console>All Services>EC2>Auto Scaling>Launch Configuration>lc-cd**
 
-**Step 2. Select launch configuration “lc-cd ”
+**Step 2. Select launch configuration “lc-cd”**
 - Click Actions>create auto scaling group
 
 **Step 3. Give auto scaling group name - asg-cd**
