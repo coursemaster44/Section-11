@@ -655,3 +655,149 @@ Click on Update and exit
 
 
 
+# 5-crud-app-blue-green-lab
+
+**Step 1.Goto Visual Studio Code**
+- Edit index.ejs file for the new color
+- Run the following commands
+```sh
+$ git status
+$ git add .
+$ git commit -m "changed index color to blue"
+$ git push
+```
+**Step 2.Goto Developers Tools>CodeBuild>Build Projects>crud-cb**
+- Click on Start Build
+- change timeout - 0 hrs 5 mins
+- See the Source version is "changed index color to blue"
+
+Click on Start Build
+
+**Step 3.See Phase details**
+- Build has been completed successfully
+
+
+**Step 4.Goto S3>Buckets>sample-node-app>devbuild-crud/>crud-cb**
+- Hit Refresh to see the changes
+- To make crud-cb public - Object actions>Make Public>exit
+- Copy S3 URI 
+
+**Step 5.Developers Tools>CodeDeploy>Applications>crud-app-cd>crud-app-cd-dg>Edit**
+- Click on Triggers>Create Trigger>Create Deployment Trigger
+  - Trigger name - dep-success
+  - Events - Deployment succeeds
+  - Amazon SNS Topics - Select your Topic"MyFirstTopic"
+  - Click on Create Trigger
+- Create another trigger
+  - Trigger name - dep-fails
+  - Events - Deployment fails
+  - Amazon SNS Topics - Select your Topic"MyFirstTopic"
+  - Click on Create Trigger
+
+Click on Save changes
+
+**Step 6.Ec2>Auto Scaling groups>asg-cd>Edit Group size**
+- Desired - 2
+- Minimum - 2
+- Maximum - 2
+
+Click on Update
+
+**Step 7.Developers Tools>CodeDeploy>Applications>crud-app-cd>crud-app-cd-dg>Edit**
+- Click on Deployment Type and select Blue/green
+
+Click on Save changes
+
+Now Click on Create Deployment
+
+
+**Step 8.In Create Deployment settings** 
+- Revision type - My application is stored in S3 
+- Revision location - Paste S3 URI
+- Revision file type - .Zip
+
+Click on Create Deployment
+
+**Step 8.See Deployment status**
+- See Traffic Shifting Process - 
+  - Original - 2
+  - Replacement - 0
+  
+  
+**Step 9.Monitor Deployment Lifecycle events**
+
+**Step 10.Goto Target groups>tg-cd>Registered Instances**
+- See the 4 instances as both versions are available
+  2 - original
+  2 - Replacement
+
+**Step 11.Copy DNS name value of ALB and paste it in browser**
+- Hit refresh to see change in color for instances
+- 2 shows green color and 2 shows blue color
+
+**Step 12.Goto your Email-inbox for Trigger notification**
+- e.g.SUCCESS:AWS CodeDeploy notification setup for trigger MyFirstTopic**
+
+
+**Step 13.See Deployment status**
+```sh
+- Step 1.Provisioning replacement instances ----Succeeded
+- Step 2.Installing application on replacement instances ---Succeeded
+- Step 3.Rerouting traffic to replacement instances---Succeeded
+- Step 4.Terminating original instances----Succeeded
+```
+
+**Step 14.Check DNS name in browser of ALB is now serving traffic to 2 instances**
+
+**Step 15.Open Postman Tool>Environment>Manage Environments
+
+Select ALB environment and change the url current Value DNS name of ALB:
+http://alb-crud-xxxxx.ap-south-1-1.elb.amazonaws.com
+Click on Update and exit
+
+**Step 16.Now select ALB as Environment**
+
+**Step 17.select {{url}}/create table and Click on Send**
+- Table created successfully
+
+**Step 18.Check the Table created in DynamoDB**
+- Goto AWS Console>DynamoDB>Tables
+- Table is created
+
+**Step 19.Goto Postman Tool and select ALB as Environment**
+- Put the following value - http://{{url}}/insertData
+- Click on Send
+
+**Step 20.Now Goto AWS Console>DynamoDB>Tables>Items>info**
+- New Item added successfully
+
+**Step 21.Goto Postman Tool and Now select ALB as Environment**
+- Put the following value - http://{{url}}/readData
+- Click on Send
+
+**Step 22.Goto Postman Tool and Now select ALB as Environment**
+- Put the value - http://{{url}}/updateData
+- Click on Send
+
+**Step 23.Now Goto AWS Console>DynamoDB>Tables>Items>info>actors**
+- Check for the data updated
+
+**Step 24.Goto Postman Tool and Now select ALB as Environment**
+
+- Put the value - http://{{url}}/deleteData
+- Click on Send
+
+**Step 25.Now Goto AWS Console>DynamoDB>Tables>Items>info>actors**
+
+Check for the data deleted
+**Step 26.Goto Postman Tool and Now select ALB as Environment**
+- Put the value - http://{{url}}/deleteTable
+- Click on Send
+
+**Step 27.Now Goto AWS Console>DynamoDB>Tables**
+- Refresh and see that Table is deleted
+
+
+# End of Lab
+
+
