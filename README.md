@@ -801,3 +801,119 @@ Check for the data deleted
 # End of Lab
 
 
+# crud-custom-deployment-config-lab
+
+**Step 1.Goto Visual Studio Code**
+- Edit index.ejs file & about.ejs for the new color
+- Save and Run the following commands
+```sh
+$ git status
+$ git add .
+$ git commit -m "changed index and about color"
+$ git push
+```
+**Step 2.Goto AWS Management Console>Services>Developers Tools>CodeBuild>Build Projects>crud-cb**
+- Click on Start Build
+- Change Timeout in Build configuration to 0 Hrs 5 mins
+- See the Source version is "changed index and about color"
+- Click on Start Build
+
+**Step 3.See Phase details**
+- Wait for all phases to complete successfully
+
+**Step 4.Goto S3>Buckets>sample-node-app>devbuild-crud/>crud-cb**
+- Hit Refresh to see the changes
+- To make crud-cb public - Object actions>Make Public>exit
+- Copy S3 URI 
+
+**Step 5.Developers Tools>CodeDeploy>Applications>crud-app-cd-**
+- Click on Deployment group "crud-app-cd-dg"
+
+**Step 6.Click on Create Deployment**
+- See deployment settings 
+- Revision type - My application is stored in S3 
+- Revision location - Paste S3 URI
+- Revision file type - .Zip
+- In Deployment group overrides
+  # Goto Auto Scaling Group and edit to increase instances to 4
+  - Deployment configuration>Create Deployment configuration
+    - Deployment configuration name - new-one
+	- Minimum healthy hosts>Number>Put Value-1
+- Click Create Deployment configuration
+
+Click on Create Deployment
+
+**Step 7.Click on View Events**
+- Monitor Deployment lifecycle events
+
+**Step 8.Now select ALB as Environment**
+
+**Step 9.select {{url}}/create table and Click on Send**
+- Table created successfully
+
+**Step 10.Check the Table created in DynamoDB**
+- Goto AWS Console>DynamoDB>Tables
+- Table is created
+
+**Step 11.Goto Postman Tool and select ALB as Environment**
+- Put the following value - http://{{url}}/insertData
+- Click on Send
+
+**Step 12.Now Goto AWS Console>DynamoDB>Tables>Items>info**
+- New Item added successfully
+
+**Step 13.Goto Postman Tool and Now select ALB as Environment**
+- Put the following value - http://{{url}}/readData
+- Click on Send
+
+**Step 14.Goto Postman Tool and Now select ALB as Environment**
+- Put the value - http://{{url}}/updateData
+- Click on Send
+
+**Step 15.Now Goto AWS Console>DynamoDB>Tables>Items>info>actors**
+- Check for the data updated
+
+**Step 16.Goto Postman Tool and Now select ALB as Environment**
+
+- Put the value - http://{{url}}/deleteData
+- Click on Send
+
+**Step 17.Now Goto AWS Console>DynamoDB>Tables>Items>info>actors**
+
+Check for the data deleted
+**Step 18.Goto Postman Tool and Now select ALB as Environment**
+- Put the value - http://{{url}}/deleteTable
+- Click on Send
+
+**Step 19.Now Goto AWS Console>DynamoDB>Tables**
+- Refresh and see that Table is deleted
+
+
+# End of Lab
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
