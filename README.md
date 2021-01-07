@@ -835,7 +835,7 @@ $ git push
 - Revision location - Paste S3 URI
 - Revision file type - .Zip
 - In Deployment group overrides
-  # Goto Auto Scaling Group and edit to increase instances to 4
+  #Goto Auto Scaling Group and edit to increase instances to 4
   - Deployment configuration>Create Deployment configuration
     - Deployment configuration name - new-one
 	- Minimum healthy hosts>Number>Put Value-1
