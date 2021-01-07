@@ -829,13 +829,20 @@ $ git push
 **Step 5.Developers Tools>CodeDeploy>Applications>crud-app-cd-**
 - Click on Deployment group "crud-app-cd-dg"
 
-**Step 6.Click on Create Deployment**
+**Step 6.Ec2>Auto Scaling groups>asg-cd>Edit Group size**
+- Desired - 4
+- Minimum - 4
+- Maximum - 4
+
+Click on Update
+
+
+**Step 7.Click on Create Deployment**
 - See deployment settings 
 - Revision type - My application is stored in S3 
 - Revision location - Paste S3 URI
 - Revision file type - .Zip
 - In Deployment group overrides
-  #Goto Auto Scaling Group and edit to increase instances to 4
   - Deployment configuration>Create Deployment configuration
     - Deployment configuration name - new-one
 	- Minimum healthy hosts>Number>Put Value-1
@@ -843,49 +850,49 @@ $ git push
 
 Click on Create Deployment
 
-**Step 7.Click on View Events**
+**Step 8.Click on View Events**
 - Monitor Deployment lifecycle events
 
-**Step 8.Now select ALB as Environment**
+**Step 9.Now select ALB as Environment**
 
-**Step 9.select {{url}}/create table and Click on Send**
+**Step 10.select {{url}}/create table and Click on Send**
 - Table created successfully
 
-**Step 10.Check the Table created in DynamoDB**
+**Step 11.Check the Table created in DynamoDB**
 - Goto AWS Console>DynamoDB>Tables
 - Table is created
 
-**Step 11.Goto Postman Tool and select ALB as Environment**
+**Step 12.Goto Postman Tool and select ALB as Environment**
 - Put the following value - http://{{url}}/insertData
 - Click on Send
 
-**Step 12.Now Goto AWS Console>DynamoDB>Tables>Items>info**
+**Step 13.Now Goto AWS Console>DynamoDB>Tables>Items>info**
 - New Item added successfully
 
-**Step 13.Goto Postman Tool and Now select ALB as Environment**
+**Step 14.Goto Postman Tool and Now select ALB as Environment**
 - Put the following value - http://{{url}}/readData
 - Click on Send
 
-**Step 14.Goto Postman Tool and Now select ALB as Environment**
+**Step 15.Goto Postman Tool and Now select ALB as Environment**
 - Put the value - http://{{url}}/updateData
 - Click on Send
 
-**Step 15.Now Goto AWS Console>DynamoDB>Tables>Items>info>actors**
+**Step 16.Now Goto AWS Console>DynamoDB>Tables>Items>info>actors**
 - Check for the data updated
 
-**Step 16.Goto Postman Tool and Now select ALB as Environment**
+**Step 17.Goto Postman Tool and Now select ALB as Environment**
 
 - Put the value - http://{{url}}/deleteData
 - Click on Send
 
-**Step 17.Now Goto AWS Console>DynamoDB>Tables>Items>info>actors**
+**Step 18.Now Goto AWS Console>DynamoDB>Tables>Items>info>actors**
 
 Check for the data deleted
-**Step 18.Goto Postman Tool and Now select ALB as Environment**
+**Step 19.Goto Postman Tool and Now select ALB as Environment**
 - Put the value - http://{{url}}/deleteTable
 - Click on Send
 
-**Step 19.Now Goto AWS Console>DynamoDB>Tables**
+**Step 20.Now Goto AWS Console>DynamoDB>Tables**
 - Refresh and see that Table is deleted
 
 
