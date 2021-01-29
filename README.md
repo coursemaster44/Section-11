@@ -194,13 +194,13 @@ Click on Create Deployment
 
 **Step 25.Click on View Events**
 ```sh
-ApplicationStop------Success
-DownloadBundle------Success
-BeforeInstall------Success
-Install-----------Success
-AfterInstall------Success
-ApplicationStart------Success
-Validateservice  - -----Failed---ScriptFailed
+ApplicationStop------Succeeded
+DownloadBundle-------Succeeded
+BeforeInstall--------Succeeded
+Install--------------Succeeded
+AfterInstall---------Succeeded
+ApplicationStart-----Succeeded
+Validateservice ------Failed---ScriptFailed
 ```
 Click on ScriptFailed to see the details
 
@@ -660,7 +660,7 @@ Click on Update and exit
 # 5-crud-app-blue-green-lab
 
 **Step 1.Goto Visual Studio Code**
-- Edit index.ejs file for the new color
+- Edit index.ejs file for the new color(Blue)
 - Run the following commands
 ```sh
 $ git status
@@ -837,9 +837,10 @@ $ git push
 - Maximum - 4
 
 Click on Update
+**Step 7. Check DNS of ALB in the browser and refresh it 4 times**
+- See that new ec2 instances have the latest version
 
-
-**Step 7.Click on Create Deployment**
+**Step 8.Goback to step 5 and Click on Create Deployment**
 - See deployment settings 
 - Revision type - My application is stored in S3 
 - Revision location - Paste S3 URI
@@ -852,49 +853,53 @@ Click on Update
 
 Click on Create Deployment
 
-**Step 8.Click on View Events**
+**Step 9.Click on View Events**
 - Monitor Deployment lifecycle events
+- See 2 older instances are deregistering
 
-**Step 9.Now select ALB as Environment**
+**Step 10. After the completion of Deployment Check DNS of ALB**
+- Now latest version is on 2 newer ec2 instances
 
-**Step 10.select {{url}}/create table and Click on Send**
+**Step 11.Now select ALB as Environment**
+
+**Step 12.select {{url}}/create table and Click on Send**
 - Table created successfully
 
-**Step 11.Check the Table created in DynamoDB**
+**Step 13.Check the Table created in DynamoDB**
 - Goto AWS Console>DynamoDB>Tables
 - Table is created
 
-**Step 12.Goto Postman Tool and select ALB as Environment**
+**Step 14.Goto Postman Tool and select ALB as Environment**
 - Put the following value - http://{{url}}/insertData
 - Click on Send
 
-**Step 13.Now Goto AWS Console>DynamoDB>Tables>Items>info**
+**Step 15.Now Goto AWS Console>DynamoDB>Tables>Items>info**
 - New Item added successfully
 
-**Step 14.Goto Postman Tool and Now select ALB as Environment**
+**Step 16.Goto Postman Tool and Now select ALB as Environment**
 - Put the following value - http://{{url}}/readData
 - Click on Send
 
-**Step 15.Goto Postman Tool and Now select ALB as Environment**
+**Step 17.Goto Postman Tool and Now select ALB as Environment**
 - Put the value - http://{{url}}/updateData
 - Click on Send
 
-**Step 16.Now Goto AWS Console>DynamoDB>Tables>Items>info>actors**
+**Step 18.Now Goto AWS Console>DynamoDB>Tables>Items>info>actors**
 - Check for the data updated
 
-**Step 17.Goto Postman Tool and Now select ALB as Environment**
+**Step 19.Goto Postman Tool and Now select ALB as Environment**
 
 - Put the value - http://{{url}}/deleteData
 - Click on Send
 
-**Step 18.Now Goto AWS Console>DynamoDB>Tables>Items>info>actors**
+**Step 20.Now Goto AWS Console>DynamoDB>Tables>Items>info>actors**
 
 Check for the data deleted
-**Step 19.Goto Postman Tool and Now select ALB as Environment**
+**Step 21.Goto Postman Tool and Now select ALB as Environment**
 - Put the value - http://{{url}}/deleteTable
 - Click on Send
 
-**Step 20.Now Goto AWS Console>DynamoDB>Tables**
+**Step 22.Now Goto AWS Console>DynamoDB>Tables**
 - Refresh and see that Table is deleted
 
 
