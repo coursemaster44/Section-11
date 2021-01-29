@@ -17,6 +17,8 @@ $ git push
 - See All the things have been copied 
 
 **Step 3.Goto CodeBuild>Build Projects>Create build project**
+
+Provide details in project configuration:
 - Project name - crud-cb
 - In Source Tab
   - Source provider - AWS CodeCommit
@@ -38,15 +40,15 @@ $ git push
 - Artifacts Section:
   - Type - Amazon S3
   - Bucket name - Sample-Node_App-amit
-  - Name - devbuild-crud
-  - Path - devbuilds/
+  - Name - 
+  - Path - devbuild-crud
   - Artifacts packaging - Select Zip
   - Select “Disable artifacts encryption”
 
 - Logs section
   - CloudWatch - Select Cloudwatch logs
-  - Group name - “cb-project-s3”
-  - Stream name - "cb-project-s3"
+  - Group name - “devbuild-crud”
+  - Stream name - "devbuild-crud"
 
 Click on Create Build Project
 
@@ -57,18 +59,12 @@ Click on Create Build Project
 Click on Start Build
 
 **Step 4. See Build Status>Phase details**
+- Wait for all phases to be completed
 
 **Step 5. Now Goto S3>sample-node-app-amit>devbuild-crud**
 - See crud-cb >zip file
 
 # End of Lab
-
-
-
-
-
-
-
 
 
 
@@ -93,6 +89,7 @@ $ git push
 **Step 4. Choose Instance type t2 micro**
 
 Click Next:Configure Instance
+
 **Step 5.Leave everything default beside IAM Role and User Data Section**
 - IAM Role - Ec2S3FullAccess
 
@@ -120,7 +117,7 @@ Click on Next:Add Tags
 Click on Next:Configure Security Group
 
 **Step 8.Configure Security Group:**
-
+ 
 - Select Security Group with:
   - HTTP:80 Source-0.0.0.0/0
   - TCP:22 Source-0.0.0.0/0
@@ -221,7 +218,7 @@ $ git push
 # End of lab
 # 2-cd-single-ec2-lab-2
 
-**Step 1.Open the Visual Studio Code**
+**Step 1.Open Terminal in Visual Studio Code**
 - Run the following commands
 ```sh
 $ git status
@@ -231,8 +228,9 @@ $ git commit -m "modified run.sh script"
 $ git push
 ```
 **Step 2.Goto Ec2>Security Groups>sg-xxxx>Edit inbound rules**
+- Click on Add rule
 - Protocol:Port = Tcp:8080 from Source(0.0.0.0/0) 
-- Click on Save
+- Click on Save rules
 
 **Step 3.Goto Developers Tools>CodeBuild>Build Projects>crud-cb**
 - Click on Start Build
@@ -260,15 +258,15 @@ Click on Create Deployment
 
 **Step 8.Click on View Events**
 ```sh
-ApplicationStop------Success
-DownloadBundle------Success
-BeforeInstall------Success
-Install-----------Success
-AfterInstall------Success
-ApplicationStart------Success
-Validateservice  -------Success
+ApplicationStop-----Succeeded
+DownloadBundle------Succeeded
+BeforeInstall-------Succeeded
+Install-------------Succeeded
+AfterInstall--------Succeeded
+ApplicationStart----Succeeded
+Validateservice  ---Succeeded
 ```
-**Step 9.Click Instance and copy & paste the Public IP address in browser to see it running**
+**Step 9.Click Instance and copy & paste the Public IP address in browser and see that it is running**
 - e.g.- 13.222.125.52:8080
 
 **Step 10.Open Postman Tool>Environment>Manage Environments**
@@ -355,9 +353,9 @@ Click Next
 
 **Step 10. See Review and Click on Create Auto Scaling Group**
 
-**Step 11. AWS Console>Developers Tools>CodeDeploy>Applications>cd-app>Create Deployment Group**
+**Step 11. AWS Console>Developers Tools>CodeDeploy>Applications>crud-app-cd>Create Deployment Group**
 
-**Step 12.Provide details:**
+**Step 12.Provide details :**
 - Deployment group name - crud-app-cd-asg-dg
 - Service role - Same
 - Deployment Type - In-Place
@@ -475,6 +473,8 @@ Click on Update
 Now Click on Next
 
 **Step 3. In Register targets**
+
+Provide the following details:
 - Select 2 instances from the available instances
 - Ports for the selected instances-8080
 - Click on "Include as pending below"
@@ -488,6 +488,8 @@ Now Click on Create target group
 **Step 6. Click on Create in Application Load Balancer**
 
 **Step 7. Configure Load Balancer as following In Basic Configuration**
+
+Provide the following details:
 - Name- alb-cd
 - Scheme- internet-facing
 - Ip address type- ipv4
@@ -534,7 +536,7 @@ $ git push
 
 Click on Start Build
 
-**Step 15 .See Phase details**
+**Step 15. See All Phases details**
 - Build has been completed successfully
 
 
@@ -571,7 +573,7 @@ AllowTraffic
 AfterAllowTraffic
 ```
 
-**Step 20.Copy DNS name value of ALB and paste it in browser**
+**Step 20. Copy DNS name value of ALB and paste it in browser**
 - Hit refresh to see change in color for second instance
 
 
