@@ -1,7 +1,7 @@
 # Section-11
-# Deploying-Sample-App-With-CRUD-Functionality-on AWS-With-(CI-CD)
 
-# 0-crud-cb-lab
+# AWS CodeBuild : Build CRUD App from CodeCommit - Lab
+
 **Step 1.Open the Visual Studio Code**
 - Run the following commands
 ```sh
@@ -70,7 +70,7 @@ Click on Start Build
 
 
 
-# 1-cd-single-ec2-lab-1
+# Deploy CRUD App on Single EC2 : Part 1 - Lab
 
 **Step 1.Open the Visual Studio Code**
 - Run the following commands
@@ -216,7 +216,9 @@ $ git commit -m "modified validate.sh to ping on port 8080"
 $ git push
 ```
 # End of lab
-# 2-cd-single-ec2-lab-2
+
+
+# Deploy CRUD App on Single EC2 : Part 2 - Lab
 
 **Step 1.Open Terminal in Visual Studio Code**
 - Run the following commands
@@ -320,9 +322,8 @@ Click on Update and exit
 
 
 
+# CodeDeploy Deployment on Auto Scaling - Lab
 
-
-# 3-crud-deployment-on-asg-lab
 **Step1-AWS Console>All Services>EC2>Auto Scaling>Launch Configuration>lc-cd**
 
 **Step 2. Select launch configuration “lc-cd”**
@@ -455,7 +456,7 @@ Click on Update
 
 
 
-# 4-crud-deployment-on-asg-alb-lab
+# CodeDeploy in-place Deployment with ALB - Lab
 
 **Step 1. Go to AWS Console>All Services>EC2>Load Balancing>Target Groups>Create Target Group**
 
@@ -657,7 +658,7 @@ Click on Update and exit
 
 
 
-# 5-crud-app-blue-green-lab
+# CodeDeploy Blue Green Deployment - Lab
 
 **Step 1.Goto Visual Studio Code**
 - Edit index.ejs file for the new color(Blue)
@@ -803,7 +804,7 @@ Check for the data deleted
 # End of Lab
 
 
-# crud-custom-deployment-config-lab
+# Codedeploy Deployment Configuration - Lab
 
 **Step 1.Goto Visual Studio Code**
 - Edit index.ejs file & about.ejs for the new color
